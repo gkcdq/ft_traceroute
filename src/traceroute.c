@@ -14,12 +14,18 @@ int main(int ac, char **av)
     struct addrinfo hints;
     struct addrinfo *res; 
 
-    if (resolveAndSocket(&arc, &hints, &res) == INT_MAX)
+    arc.fd = resolveAndSocket(&arc, &hints, &res);
+    if (arc.fd < 0)
         return 1;
+    
+    //if (send_packet(arc.fd, arc.TTL, res->ai_addr, arc->sequence++) < 0)
 
+    while (arc.TTL <= arc.TTL_MAX)
+    {
+        printf("%d\n", arc.TTL);
 
-
-
+        arc.TTL++;
+    }
 
 
 

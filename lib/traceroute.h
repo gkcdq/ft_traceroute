@@ -30,6 +30,8 @@ typedef struct Architecture
     int help;
     char *host;
     int exitCode;
+    int fd;
+    int sequence;
 } s_arc;
 
 typedef struct Information
@@ -46,5 +48,8 @@ int checkArgs(int ac, char **av, s_arc *arc);
 void printTexte(int n, char *s);
 void HintsFilter(struct addrinfo *hints);
 int resolveAndSocket(s_arc *arc, struct addrinfo *hints, struct addrinfo **res);
+unsigned short calculateChecksum(void *b, int len);
+void IcmpInit(struct icmphdr *icmp, int seq);
+int send_packet(int sockfd, int ttl, struct sockaddr *target_addr, int seq);
 
 #endif
