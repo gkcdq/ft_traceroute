@@ -25,6 +25,7 @@ int main(int ac, char **av)
     tv.tv_usec = 0;
     if (setsockopt(arc.fd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0) {
         fprintf(stderr, "Error: setsockopt timeout failed\n");
+        close(arc.fd);
         freeaddrinfo(res);
         return 1;
     }
@@ -32,15 +33,14 @@ int main(int ac, char **av)
     struct timeval start, end;
     char target_ip_str[INET_ADDRSTRLEN] = {0};
     
-    if (res && res->ai_addr) {
+    if (res && res->ai_addr)
+    {
         struct sockaddr_in *ipv4 = (struct sockaddr_in *)res->ai_addr;
         inet_ntop(AF_INET, &(ipv4->sin_addr), target_ip_str, INET_ADDRSTRLEN);
     }
 
-    printf("traceroute to %s (%s), %d hops max, %d byte packets\n", 
-            (arc.host ? arc.host : av[1]), target_ip_str, arc.TTL_MAX, 60);
+    printf("traceroute to %s (%s), %d hops max, %d byte packets\n", (arc.host ? arc.host : av[1]), target_ip_str, arc.TTL_MAX, 60);
 
-    // DÉCLARATION ICI : prev_ip doit être ici pour être persistante sur toute la route
     char prev_ip[INET_ADDRSTRLEN] = {0};
 
     while (arc.TTL <= arc.TTL_MAX)
@@ -52,6 +52,7 @@ int main(int ac, char **av)
             gettimeofday(&start, NULL);
             if (send_packet(arc.fd, arc.TTL, res->ai_addr, arc.sequence++) < 0)
             {
+                close(arc.fd);
                 freeaddrinfo(res);
                 return 1;
             }
@@ -99,11 +100,12 @@ int main(int ac, char **av)
                     break;
                 }
             }
-            fflush(stdout);
         }        
         printf("\n");
         arc.TTL++;
     }
+    close(arc.fd);
     freeaddrinfo(res);
+
     return arc.exitCode;
 }
