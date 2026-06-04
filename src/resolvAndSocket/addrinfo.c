@@ -5,7 +5,7 @@ int resolveAndSocket(s_arc *arc, struct addrinfo *hints, struct addrinfo **res)
     HintsFilter(hints);
     if (getaddrinfo(arc->host, NULL, hints, res) != 0)
     {
-        fprintf(stderr, "Erreur de résolution");
+        fprintf(stderr, "Error : resolution\n");
         return -1;
     }
     int sockfd = socket(hints->ai_family, hints->ai_socktype, hints->ai_protocol);

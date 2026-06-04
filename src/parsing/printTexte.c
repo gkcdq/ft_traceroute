@@ -5,7 +5,7 @@ void printTexte(int n, char *s)
     if (n == 1)
     {
         printf("Usage:\n");
-        printf("  traceroute [ -46dFITnreAUDV ] host [ packetlen ]\n");
+        printf("  traceroute [ --help ] host\n");
         printf("Options:\n");
         printf("  --help                      Read this help and exit\n");
         return;
