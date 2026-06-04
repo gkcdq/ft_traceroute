@@ -1,9 +1,14 @@
 #include "../lib/traceroute.h"
 
+int SIG = 0;
+
 int main(int ac, char **av)
 {
     s_info info;
     s_arc arc;
+
+    signal(SIGINT, handleSignal);
+
     InformationInit(&info);
     ArcitectureInit(&arc);
 
@@ -43,7 +48,7 @@ int main(int ac, char **av)
 
     char prev_ip[INET_ADDRSTRLEN] = {0};
 
-    while (arc.TTL <= arc.TTL_MAX)
+    while (arc.TTL <= arc.TTL_MAX && SIG == 0)
     {
         printf("%2d", arc.TTL);
         

@@ -61,5 +61,6 @@ void IcmpInit(struct icmphdr *icmp, int seq);
 int send_packet(int sockfd, int ttl, struct sockaddr *target_addr, int seq);
 int receive_packet(s_arc *arc);
 int parse_reply(char *buffer, int my_pid);
+void handleSignal(int sig);
 
 #endif
