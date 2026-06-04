@@ -81,7 +81,7 @@ int main(int ac, char **av)
                 char ip_str[INET_ADDRSTRLEN] = {0};
                 inet_ntop(AF_INET, &(arc.recv_addr.sin_addr), ip_str, INET_ADDRSTRLEN);
 
-                if (ft_strcmp(prev_ip, ip_str) != 0) 
+                if (arc.probe == 0 || ft_strcmp(prev_ip, ip_str) != 0) 
                 {
                     char hostname[NI_MAXHOST] = {0};
                     if (getnameinfo((struct sockaddr *)&arc.recv_addr, arc.addr_len, hostname, sizeof(hostname), NULL, 0, 0) != 0) 
