@@ -10,6 +10,8 @@ void ArcitectureInit(s_arc *arc)
     arc->exitCode = 0;
     arc->fd = -1;
     arc->sequence = 1;
+    arc->probe = 0;
+    arc->bytes_received = -1;
 }
 
 void InformationInit(s_info *info)
@@ -35,5 +37,5 @@ void IcmpInit(struct icmphdr *icmp, int seq)
     icmp->un.echo.id = htons(getpid() & 0xFFFF);
     icmp->un.echo.sequence = htons(seq);
     icmp->checksum = 0; 
-    icmp->checksum = calculateChecksum(&icmp, sizeof(icmp));
+    icmp->checksum = calculateChecksum(icmp, sizeof(*icmp));
 }

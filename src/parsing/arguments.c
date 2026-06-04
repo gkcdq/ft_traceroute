@@ -1,6 +1,6 @@
 #include "../../lib/traceroute.h"
 
-static int ft_strcmp(char *s1, char *s2)
+int ft_strcmp(char *s1, char *s2)
 {
     int i = 0;
 
@@ -33,4 +33,18 @@ int checkArgs(int ac, char **av, s_arc *arc)
     if (ac == 2)
         arc->host = av[1];
     return 0;
+}
+
+char *ft_strcpy(char *dest, const char *src)
+{
+    int i = 0;
+
+    while (src[i] != '\0')
+    {
+        dest[i] = src[i];
+        i++;
+    }
+    dest[i] = '\0';
+
+    return (dest);
 }
